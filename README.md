@@ -301,7 +301,7 @@ Combined with the 4-point filter, only **genuinely qualified, approved** leads r
 
 <div align="center">
 
-**Built by [Abdul Rehman](https://github.com/ar-rehman786) · [Slora AI](https://www.sloraai.com/)**
+**Built by [Abdul Rehman](https://github.com/ar-rehman786)**
 
 [![Gmail](https://img.shields.io/badge/Email-abdulrehmanhameed4321%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:abdulrehmanhameed4321@gmail.com)
 &nbsp;
