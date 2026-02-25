@@ -172,7 +172,7 @@ Body    : Full HTML email with embedded screenshot
 │  "Find your dream Website Demo..."  │
 │        [ Book a consultation ]      │
 ├─────────────────────────────────────┤
-│  🔥 35% OFF special offer box       │
+│   35% OFF special offer box       │
 │  Why choose us? (3-column icons)    │
 │    • Accelerate Growth              │
 │    • Smarter Automation             │
