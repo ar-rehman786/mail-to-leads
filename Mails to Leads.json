@@ -1,0 +1,496 @@
+{
+  "name": "Mails to Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        -432
+      ],
+      "id": "f07e78cb-7a26-4c3e-bf27-fb67df5cfff9",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VBnAVEKkoAUt2pyze1RWNKTMLatFc_cOS9D6LGjdvMg/edit?gid=78097739#gid=78097739",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VBnAVEKkoAUt2pyze1RWNKTMLatFc_cOS9D6LGjdvMg/edit?gid=78097739#gid=78097739",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        176,
+        -208
+      ],
+      "id": "e791fb43-2f3f-45c0-b651-b07782d2cc11",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OQcgxeBYgIenob73",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0acc220a-18bd-4ef6-a998-9e9b29f7b9f8",
+              "leftValue": "={{ $json['Mail ids'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "0f2142b1-251a-4aea-8653-852473826634",
+              "leftValue": "={{ $json.Website }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "4ad4967a-a336-4e1f-a8ec-cdeee6642555",
+              "leftValue": "={{ $json.CheckBox }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "f3cdb7a6-c4e4-4c81-a0c5-eedf37756330",
+              "leftValue": "={{ $json[\"Emailed?\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        400,
+        -208
+      ],
+      "id": "4251f5da-95c0-4481-80cc-4f4b1b20654f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('HTTP Request').item.json['Mail ids'] }}",
+        "subject": "fghnvbnm",
+        "message": "=<!doctype html> <html>   <head>     <meta charset=\"UTF-8\" />    \n <title>Email Template</title>   \n  <style>  \n  body {         margin: 0;         padding: 0;         background-color: #EEF0FF;         font-family: Arial, sans-serif;       }   \n    .email-container {         background-color: #FFFFFF;         border-radius: 8px;         padding: 20px;       }   \n    .logo {         max-width: 150px;         display: block;         border: 0;       }     \n  .center-image {         display: block;         border: 0;         outline: none;\n         text-decoration: none;         width: 100%;    \n     max-width: 560px;       \n  border-radius: 6px;       }   \n    .content-block {         padding: 30px;         text-align: left;       }    \n   .tag {         color: #666;         font-size: 12px;   \n      font-weight: bold;         margin: 0;       } \n      h1 {         font-size: 26px;         margin: 15px 0 10px 0;  \n       line-height: 1.4;\n         color: #000;       }     \n  p {         color: #555;         font-size: 15px;         line-height: 1.7;       }    \n   .btn {         background: #000;  \n       color: #fff;         padding: 14px 24px;         border-radius: 6px;         text-decoration: none;         font-size: 15px;         font-weight: bold;         display: inline-block;       }     </style>   </head>   <body>     <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">       <tr>         <td style=\"padding: 30px 0\">           <table             width=\"600\"             class=\"email-container\"             border=\"0\"             cellspacing=\"0\"             cellpadding=\"0\"           >             <!-- LOGO -->             <tr>               <td align=\"center\" style=\"padding: 6px 0px\">                 <a                   href=\"https://www.sloraai.com/\"                   target=\"_blank\"                   style=\"text-decoration: none\"                 >                   <h2 style=\"text-align: center; color: black\">                     Slora <span style=\"color: blue\">AI</span>                   </h2>                   <!-- <img src=\"https://res.cloudinary.com/do9vazyfu/image/upload/v1764888872/slora_yeexmi.png\" alt=\"Logo\" class=\"logo\" style=\"display:block; margin:0 auto; border-radius:10px;\" /> -->                 </a>               </td>             </tr>             <!-- MAIN IMAGE -->             <tr style=\"width: 100%\">               <td align=\"center\" style=\"padding: 0\">                 <table                   border=\"0\"                   cellspacing=\"0\"                   cellpadding=\"0\"                   align=\"center\"                 >                   <tr style=\"padding: 20px 0\">                     <td align=\"center\">                       <a href=\"\"                         ><img                           src=\"{{ $json.secure_url }}\"                           alt=\"Main Banner\"                           class=\"center-image\"                       /></a>                     </td>                   </tr>                   <tr></tr>                   <tr>                     <td align=\"center\" style=\"padding: 6px 0px\">                       <a                         href=\"\"                         class=\"btn\"                         style=\"                           font-size: 12px;                           padding: 10px;                           background-color: blue;                           color: white;                           display: inline-block;                           text-align: center;                         \"                       >                         Visit Your New Site                       </a>                     </td>                   </tr>                 </table>               </td>             </tr>             <!-- CONTENT -->             <tr>               <td class=\"content-block\" style=\"padding-bottom: 10px\">                 <p class=\"tag\">CONSULTATION OFFER</p>                 <h1>                   Find your dream Website Demo Along With An AI Voice Agent.                 </h1>                 <p style=\"margin-bottom: 0; padding-bottom: 0\">                   Power up your brand with modern websites, intelligent                   chatbots, and 24/7 AI receptionists. Claim 35% OFF your first                   consultation.                 </p>               </td>             </tr>             <!-- BUTTON -->             <tr>               <td style=\"padding: 0 30px 40px 30px\">                 <a                   href=\"https://www.sloraai.com/\"                   class=\"btn\"                   style=\"color: white\"                   >Book a consultation</a                 >               </td>             </tr>             <!-- NEW SECTION (Your Screenshot Section Added Here) -->             <tr>               <td style=\"padding: 20px 30px; border-top: 1px solid #ddd\">                 <!-- Offer Box -->                 <table                   width=\"100%\"                   cellpadding=\"0\"                   cellspacing=\"0\"                   style=\"                     border: 1px dashed #B48BFF;                     border-radius: 8px;                     background: #FAF7FF;                   \"                 >                   <tr>                     <td                       style=\"padding: 12px 16px; font-size: 14px; color: #333\"                     >                       :fire: <strong>SPECIAL OFFER:</strong> Claim                       <strong>35% OFF</strong> your first consultation & setup                       this week only!                     </td>                   </tr>                 </table>                 <h2                   style=\"                     font-size: 24px;                     margin: 25px 0 10px 0;                     font-weight: bold;                     color: #000;                   \"                 >                   Why choose us?                 </h2>                 <!-- Icons Row -->                 <table                   width=\"100%\"                   cellspacing=\"0\"                   cellpadding=\"0\"                   style=\"margin-top: 15px\"                 >                   <tr>                     <!-- Item 1 -->                     <td width=\"33%\" align=\"center\" style=\"padding: 10px\">                       <img                         src=\"https://img.icons8.com/?size=128&id=48342&format=png\"                         width=\"50\"                         alt=\"\"                       />                       <h4                         style=\"                           font-size: 16px;                           margin: 10px 0 5px 0;                           padding: 0px 20px;                         \"                       >                         Accelerate Growth.                       </h4>                       <p                         style=\"                           font-size: 14px;                           color: #555;                           margin: 0;                           padding-left: 20px;                           text-align: start;                         \"                       >                         Stop missing calls. Our AI handles leads while you                         sleep.                       </p>                     </td>                     <!-- Item 2 -->                     <td width=\"33%\" align=\"center\" style=\"padding: 10px\">                       <img                         src=\"https://img.icons8.com/?size=160&id=92048&format=png\"                         width=\"50\"                         alt=\"\"                       />                       <h4 style=\"font-size: 16px; margin: 10px 0 5px 0\">                         Smarter Automation.                       </h4>                       <p                         style=\"                           font-size: 14px;                           color: #555;                           margin: 0;                           text-align: start;                           padding-left: 20px;                         \"                       >                         Custom-built AI receptionists that understand your                         business.                       </p>                     </td>                     <!-- Item 3 -->                     <td width=\"33%\" align=\"center\" style=\"padding: 10px\">                       <img                         src=\"https://img.icons8.com/?size=128&id=48218&format=png\"                         width=\"50\"                         alt=\"\"                       />                       <h4 style=\"font-size: 16px; margin: 10px 0 5px 0\">                         Enterprise Tech, Small Biz Price.                       </h4>                       <p                         style=\"                           font-size: 14px;                           color: #555;                           margin: 0;                           text-align: start;                           padding-left: 10px;                         \"                       >                         Premium web design and AI at a fraction of agency costs.                       </p>                     </td>                   </tr>                 </table>                 <!-- CTA Button -->                 <div style=\"text-align: center; margin: 30px 0\">                   <a                     href=\"https://www.sloraai.com/\"                     style=\"                       background: #5D3EFF;                       color: white;                       padding: 14px 26px;                       border-radius: 8px;                       text-decoration: none;                       font-weight: bold;                       display: inline-block;                     \"                   >                     CLAIM MY 35% DISCOUNT NOW                   </a>                 </div>                 <!-- Footer Links -->                 <div                   style=\"text-align: center; font-size: 14px; margin-top: 10px\"                 >                   <a href=\"#\" style=\"color: #333; margin: 0 6px\">Home</a>                   <a href=\"#\" style=\"color: #333; margin: 0 6px\">About</a>                   <a href=\"#\" style=\"color: #333; margin: 0 6px\">Articles</a>                   <a href=\"#\" style=\"color: #333; margin: 0 6px\">Gallery</a>                   <a href=\"#\" style=\"color: #333; margin: 0 6px\">Tattoos</a>                   <a href=\"#\" style=\"color: #333; margin: 0 6px\">Blog</a>                   <a href=\"#\" style=\"color: #333; margin: 0 6px\">Contact</a>                 </div>               </td>             </tr>           </table>         </td>       </tr>     </table>   </body> </html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        -208
+      ],
+      "id": "9a210e74-9501-4202-b7d7-39b6c7bdf4f8",
+      "name": "Send a message",
+      "webhookId": "70d21fb4-8626-428f-9e43-598b34d2ac07",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "phpNDgbRpsXEebzF",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1VBnAVEKkoAUt2pyze1RWNKTMLatFc_cOS9D6LGjdvMg",
+          "mode": "list",
+          "cachedResultName": "Tatto shops leads ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VBnAVEKkoAUt2pyze1RWNKTMLatFc_cOS9D6LGjdvMg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 78097739,
+          "mode": "list",
+          "cachedResultName": "mail saved",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VBnAVEKkoAUt2pyze1RWNKTMLatFc_cOS9D6LGjdvMg/edit#gid=78097739"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Emailed?": "email done",
+            "Date": "={{ new Date().toLocaleDateString('en-CA') }}",
+            "Mail ids": "={{ $('If').item.json[\"Mail ids\"] }}"
+          },
+          "matchingColumns": [
+            "Mail ids"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Mail ids",
+              "displayName": "Mail ids",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Country",
+              "displayName": "Country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Website",
+              "displayName": "Website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email Template",
+              "displayName": "Email Template",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Image Url",
+              "displayName": "Image Url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "New Site Url",
+              "displayName": "New Site Url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CheckBox",
+              "displayName": "CheckBox",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Emailed?",
+              "displayName": "Emailed?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1520,
+        -208
+      ],
+      "id": "78127751-22e1-4a12-9843-a19ce1977258",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OQcgxeBYgIenob73",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        624,
+        -208
+      ],
+      "id": "e2261c2c-33b2-452e-8c8e-4a5eced8f24e",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.screenshotone.com/take",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_key",
+              "value": "0cc4ea040cde564dcacd"
+            },
+            {
+              "name": "url",
+              "value": "={{ $json.Website }}"
+            },
+            {
+              "name": "format",
+              "value": "jpg"
+            },
+            {
+              "name": "block_cookie_banners",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        816,
+        -208
+      ],
+      "id": "1c9d58d6-f032-49ff-abae-246642e1d3d6",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -208
+      ],
+      "id": "bd048306-7f5d-4993-9f14-6f8f8eebd1b4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        -208
+      ],
+      "id": "eb8d88a7-a2b0-4e44-ab66-aaac5ee158ef",
+      "name": "Upload an asset from file data",
+      "credentials": {
+        "cloudinaryApi": {
+          "id": "bskk5K8LYTkwQCGs",
+          "name": "Cloudinary account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b386f9e7-59f3-4f8e-8fa2-503a8118a46b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "be7544a5001b92bf84c2cea86d180101631dd7bbfcb648e5822323fc75758f50"
+  },
+  "id": "yphrR9L7urLmPTDv",
+  "tags": []
+}
